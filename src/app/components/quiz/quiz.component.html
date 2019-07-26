@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title class="mx-0">Question - {{currentIndex + 1}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row m-4">
+      <mat-chip-list class="col-sm-12 d-flex justify-content-center">
+        <mat-chip selected>{{questions[currentIndex].op1}}</mat-chip>
+        <mat-chip selected color="accent">{{questions[currentIndex].operator}}</mat-chip>
+        <mat-chip selected>{{questions[currentIndex].op2}}</mat-chip>
+      </mat-chip-list>
+    </div>
+    <div class="row m-4">
+      <mat-form-field class="col-sm-12 justify-content-center">
+        <label>
+          <input autocomplete="off" [(ngModel)]="questions[currentIndex].value" matInput placeholder="Type your answer and hit next" type="text">
+        </label>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+
+    <button class="mx-2" *ngIf="currentIndex<totalQuestions" mat-flat-button color="primary"
+            [disabled]="currentIndex==totalQuestions-1" (click)="nextQuestionClickHandler()">Next
+    </button>
+    <button *ngIf="currentIndex==totalQuestions-1" mat-flat-button color="primary"
+            (click)="submitButtonClickHandler()">Submit
+    </button>
+  </mat-card-actions>
+</mat-card>
+
