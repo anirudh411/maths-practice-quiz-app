@@ -1,11 +1,15 @@
 <div class="container d-flex" style="height: 100vh">
-  <div class="row align-items-center w-100" >
-    <div class="col-sm-6">
-      <app-quiz></app-quiz>
+  <div class="row align-items-center w-100">
+
+    <div class="col-sm-6" [ngClass]="startQuiz1?'text-center':''">
+      <app-quiz *ngIf="!startQuiz1"></app-quiz>
+      <button mat-stroked-button color="primary" (click)="startQuiz1=!startQuiz1" *ngIf="startQuiz1">Start Quiz</button>
 
     </div>
-    <div class="col-sm-6">
-      <app-quiz></app-quiz>
+    <div class="col-sm-6" [ngClass]="startQuiz1?'text-center':''">
+      <app-quiz *ngIf="!startQuiz2"></app-quiz>
+      <button mat-stroked-button color="primary" (click)=" startQuiz2=!startQuiz2" *ngIf="startQuiz2">Start Quiz
+      </button>
     </div>
   </div>
 </div>

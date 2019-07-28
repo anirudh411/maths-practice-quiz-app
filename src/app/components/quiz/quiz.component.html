@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="currentIndex!=totalQuestions;else resultCard">
   <mat-card-header>
     <mat-card-title class="mx-0">Question - {{currentIndex + 1}}</mat-card-title>
   </mat-card-header>
@@ -13,7 +13,9 @@
     <div class="row m-4">
       <mat-form-field class="col-sm-12 justify-content-center">
         <label>
-          <input autocomplete="off" [(ngModel)]="questions[currentIndex].value" matInput placeholder="Type your answer and hit next" type="text">
+          <input [value]="questions[currentIndex].value"
+                 autocomplete="off" [(ngModel)]="questions[currentIndex].value" matInput
+                 placeholder="Type your answer and hit next" type="text">
         </label>
       </mat-form-field>
     </div>
@@ -21,11 +23,29 @@
   <mat-card-actions>
 
     <button class="mx-2" *ngIf="currentIndex<totalQuestions" mat-flat-button color="primary"
-            [disabled]="currentIndex==totalQuestions-1" (click)="nextQuestionClickHandler()">Next
+            [disabled]="currentIndex==totalQuestions" (click)="nextQuestionClickHandler()">Next
     </button>
-    <button *ngIf="currentIndex==totalQuestions-1" mat-flat-button color="primary"
-            (click)="submitButtonClickHandler()">Submit
-    </button>
+
   </mat-card-actions>
 </mat-card>
+
+
+<ng-template #resultCard>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="mx-0">Click submit to view result</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row m-4">
+        <button class="mr-2" *ngIf="currentIndex==totalQuestions" mat-flat-button color="primary"
+                (click)="submitButtonClickHandler()">Submit
+        </button>
+        <button *ngIf="currentIndex==totalQuestions" mat-flat-button color="accent"
+                (click)="restartButtonClickHandler()">Restart
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
 

@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
+import {MatDialog} from '@angular/material';
+import {QuizResultComponent} from '../quiz-result/quiz-result.component';
 
-interface Question {
+export interface Question {
   op1: number;
   op2: number;
   operator: string;
@@ -16,7 +18,7 @@ interface Question {
 })
 export class QuizComponent implements OnInit {
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
 
   }
 
@@ -25,7 +27,6 @@ export class QuizComponent implements OnInit {
   private opertators = ['+', '-', '+', '/', '*'];
   private currentQuestion: Question;
   public currentIndex = 0;
-  public userInput: FormControl = new FormControl();
 
   static evaluateAnswer(operatorOne: number, operatorTwo: number, operator: string) {
     // tslint:disable-next-line:no-eval
@@ -56,15 +57,21 @@ export class QuizComponent implements OnInit {
 
   setCurrentQuestion(index) {
     this.currentQuestion = this.questions[index];
-    console.log('current question', this.currentQuestion);
   }
 
   nextQuestionClickHandler() {
-    console.log(this.questions[this.currentIndex]);
     this.currentIndex++;
   }
 
   submitButtonClickHandler() {
+    this.dialog.open(QuizResultComponent, {
+      width: '500px',
+      data: {questions: this.questions}
+    });
+  }
 
+  restartButtonClickHandler() {
+    this.currentIndex = 0;
+    this.generateQuestions();
   }
 }
